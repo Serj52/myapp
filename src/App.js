@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+
 import './App.css';
+import React from 'react';
+import Form from './form';
+import weatherworker from './get_weather';
+import WeatherOutput from './weatheroutput';
 
 function App() {
+  let [sky, setSky] = React.useState('Город не задан')
+
+
+  const weather = (e) => {
+    e.preventDefault()
+    const city = e.target.elements.city.value
+    weatherworker(city)
+    .then(function(result){
+      setSky(sky=result)
+    })
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+        < Form weatherattr = {weather}/>
+        <WeatherOutput skyattr= {sky}/>
     </div>
+
   );
 }
 
 export default App;
+
+
